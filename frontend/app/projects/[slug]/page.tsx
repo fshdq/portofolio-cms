@@ -1,7 +1,7 @@
 import {formatDate} from '@/lib/formatDate'
 
 import {client} from '@/sanity/lib/client'
-import {projectQuery} from '@/sanity/lib/queries'
+import {projectQuery} from '@/sanity/queries/project'
 import PortableText from '@/app/components/PortableText'
 import { ArrowLeft, ArrowUpRight, ChevronRight } from 'lucide-react'
 import CoverImage from '@/app/components/CoverImage'
