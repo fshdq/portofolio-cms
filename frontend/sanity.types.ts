@@ -805,6 +805,15 @@ export type PostPagesSlugsResult = Array<{
 export type PagesSlugsResult = Array<{
   slug: string
 }>
+// Variable: allProjectsQuery
+// Query: *[_type == "project" && defined(slug.current)] | order(date desc, _updatedAt desc) {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  role,  tools,  }
+export type AllProjectsQueryResult = Array<never>
+// Variable: projectQuery
+// Query: *[_type == "project" && slug.current == $slug] [0] {    productThinking {      headline,      content[]{        ...,         markDefs[]{...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }}      },      gallery[]{..., "alt": coalesce(alt, "")}    },    process {      headline,      content[]{        ...,         markDefs[]{...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }}      },      gallery[]{..., "alt": coalesce(alt, "")}    },    impact,    prototypeUrl,    externalUrl,      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  role,  tools,  }
+export type ProjectQueryResult = null
+// Variable: projectPagesSlugs
+// Query: *[_type == "project" && defined(slug.current)]  {"slug": slug.current}
+export type ProjectPagesSlugsResult = Array<never>
 
 // Query TypeMap
 import '@sanity/client'
@@ -818,5 +827,8 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
+    '\n  *[_type == "project" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  role,\n  tools,\n\n  }\n': AllProjectsQueryResult
+    '\n  *[_type == "project" && slug.current == $slug] [0] {\n    productThinking {\n      headline,\n      content[]{\n        ..., \n        markDefs[]{..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n}\n      },\n      gallery[]{..., "alt": coalesce(alt, "")}\n    },\n    process {\n      headline,\n      content[]{\n        ..., \n        markDefs[]{..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n}\n      },\n      gallery[]{..., "alt": coalesce(alt, "")}\n    },\n    impact,\n    prototypeUrl,\n    externalUrl,\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  role,\n  tools,\n\n  }\n': ProjectQueryResult
+    '\n  *[_type == "project" && defined(slug.current)]\n  {"slug": slug.current}\n': ProjectPagesSlugsResult
   }
 }
